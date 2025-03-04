@@ -168,7 +168,9 @@ export default function Frame() {
               </div>
               <TouchOverlay 
                 onSwipe={(direction) => {
-                  inputHandlerRef.current?.currentDirection = direction;
+                  if (inputHandlerRef.current) {
+                    inputHandlerRef.current.currentDirection = direction;
+                  }
                 }}
                 className="bg-transparent"
               />
