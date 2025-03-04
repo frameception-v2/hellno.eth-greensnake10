@@ -78,8 +78,6 @@ export default forwardRef<CanvasHandle, { children?: React.ReactNode }>(function
     });
   }, []);
 
-  }, []);
-
   useEffect(() => {
     // Initial size update
     updateCanvasSize();
@@ -119,4 +117,5 @@ export default forwardRef<CanvasHandle, { children?: React.ReactNode }>(function
       </div>
     </CanvasContext.Provider>
   );
+});
 });
