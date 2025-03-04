@@ -151,7 +151,7 @@ export default function Frame() {
             <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
               {PROJECT_TITLE}
             </h1>
-            <GameCanvas className="flex-1 relative">
+            <GameCanvas>
               <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
                 Game Canvas Initialized
               </div>
