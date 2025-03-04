@@ -137,15 +137,27 @@ export default function Frame() {
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
-      <div className="w-[300px] mx-auto py-2 px-2">
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
-          {PROJECT_TITLE}
-        </h1>
-        <GameCanvas>
-          <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
-            Game Canvas Initialized
+      <div className="w-full max-w-[100vw] p-4">
+        {/* Aspect ratio container */}
+        <div 
+          className="relative w-full"
+          style={{
+            paddingTop: '100%', // Creates 1:1 aspect ratio
+            maxWidth: 'min(100vh, 100vw)', // Ensure square bounds
+          }}
+        >
+          {/* Actual game content */}
+          <div className="absolute inset-0 flex flex-col">
+            <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
+              {PROJECT_TITLE}
+            </h1>
+            <GameCanvas className="flex-1 relative">
+              <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
+                Game Canvas Initialized
+              </div>
+            </GameCanvas>
           </div>
-        </GameCanvas>
+        </div>
       </div>
     </div>
   );
