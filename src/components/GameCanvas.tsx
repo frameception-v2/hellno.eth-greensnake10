@@ -78,25 +78,7 @@ export default forwardRef<CanvasHandle, { children?: React.ReactNode }>(function
     });
   }, []);
 
-  }, [bufferCanvasRef, displayCanvasRef]);
-
-  // Set up animation loop
-  useEffect(() => {
-    const animate = (timestamp: number) => {
-      if (timestamp - lastFrameTime.current >= 16) { // ~60fps
-        renderFrame();
-        lastFrameTime.current = timestamp;
-      }
-      animationFrameId.current = requestAnimationFrame(animate);
-    };
-    animationFrameId.current = requestAnimationFrame(animate);
-    
-    return () => {
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
-  }, [renderFrame]);
+  }, []);
 
   useEffect(() => {
     // Initial size update
@@ -137,4 +119,4 @@ export default forwardRef<CanvasHandle, { children?: React.ReactNode }>(function
       </div>
     </CanvasContext.Provider>
   );
-}
+});
