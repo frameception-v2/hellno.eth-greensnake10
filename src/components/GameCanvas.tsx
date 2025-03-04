@@ -70,20 +70,9 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
     }
   }, []);
 
-  useEffect(() => {
-    const animate = (timestamp: number) => {
-      renderFrame();
-      animationFrameId.current = requestAnimationFrame(animate);
-    };
-    
-    animationFrameId.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
   }, [renderFrame]);
 
+  useEffect(() => {
     // Initial size update
     updateCanvasSize();
     
@@ -97,7 +86,7 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
     }
 
     return () => resizeObserver.disconnect();
-  }, []);
+  }, [updateCanvasSize]);
 
   return (
     <CanvasContext.Provider value={{
