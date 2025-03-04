@@ -62,14 +62,34 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
       canvas.style.height = `${size}px`;
     });
 
-    // Reset scale for proper buffer operations
-    const ctx = displayCanvas.getContext("2d");
-    if (ctx) {
-      ctx.resetTransform();
-      ctx.scale(scale, scale);
-    }
+    // Scale both canvas contexts
+    [displayCanvas, bufferCanvas].forEach(canvas => {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.resetTransform();
+        ctx.scale(scale, scale);
+      }
+    });
   }, []);
 
+  }, [renderFrame]);
+
+  // Set up animation loop
+  useEffect(() => {
+    const animate = (timestamp: number) => {
+      if (timestamp - lastFrameTime.current >= 16) { // ~60fps
+        renderFrame();
+        lastFrameTime.current = timestamp;
+      }
+      animationFrameId.current = requestAnimationFrame(animate);
+    };
+    animationFrameId.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
   }, [renderFrame]);
 
   useEffect(() => {
@@ -104,7 +124,8 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
         />
         <canvas
           ref={bufferCanvasRef}
-          className="hidden" // Offscreen buffer
+          className="absolute top-0 left-0 w-full h-full"
+          style={{ visibility: "hidden" }} // Offscreen buffer
         />
         {children}
       </div>
