@@ -153,7 +153,7 @@ export default function Frame() {
             </h1>
             <GameCanvas>
               <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
-                Game Canvas Initialized
+                Double Buffered Canvas Ready
               </div>
             </GameCanvas>
           </div>

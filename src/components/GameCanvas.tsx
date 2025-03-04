@@ -21,31 +21,68 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
   const displayCanvasRef = useRef<HTMLCanvasElement>(null);
   const bufferCanvasRef = useRef<HTMLCanvasElement>(null);
 
+  const animationFrameId = useRef<number>();
+  const lastFrameTime = useRef(performance.now());
+
+  const renderFrame = useCallback(() => {
+    if (!displayCanvasRef.current || !bufferCanvasRef.current) return;
+    
+    const bufferCtx = bufferCanvasRef.current.getContext('2d');
+    const displayCtx = displayCanvasRef.current.getContext('2d');
+    
+    if (!bufferCtx || !displayCtx) return;
+
+    // Clear buffers
+    bufferCtx.clearRect(0, 0, bufferCanvasRef.current.width, bufferCanvasRef.current.height);
+    displayCtx.clearRect(0, 0, displayCanvasRef.current.width, displayCanvasRef.current.height);
+
+    // Custom drawing operations would go here
+    bufferCtx.fillStyle = '#c026d3';
+    bufferCtx.fillRect(0, 0, bufferCanvasRef.current.width, bufferCanvasRef.current.height);
+
+    // Copy buffer to display
+    displayCtx.drawImage(bufferCanvasRef.current, 0, 0);
+  }, []);
+
+  const updateCanvasSize = useCallback(() => {
+    if (!containerRef.current || !displayCanvasRef.current || !bufferCanvasRef.current) return;
+
+    const container = containerRef.current;
+    const displayCanvas = displayCanvasRef.current;
+    const bufferCanvas = bufferCanvasRef.current;
+    
+    const size = Math.min(container.clientWidth, container.clientHeight);
+    const scale = window.devicePixelRatio || 1;
+
+    // Set canvas dimensions
+    [displayCanvas, bufferCanvas].forEach(canvas => {
+      canvas.width = size * scale;
+      canvas.height = size * scale;
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+    });
+
+    // Reset scale for proper buffer operations
+    const ctx = displayCanvas.getContext("2d");
+    if (ctx) {
+      ctx.resetTransform();
+      ctx.scale(scale, scale);
+    }
+  }, []);
+
   useEffect(() => {
-    const updateCanvasSize = () => {
-      if (!containerRef.current || !displayCanvasRef.current || !bufferCanvasRef.current) return;
-
-      const container = containerRef.current;
-      const displayCanvas = displayCanvasRef.current;
-      const bufferCanvas = bufferCanvasRef.current;
-      
-      const size = Math.min(container.clientWidth, container.clientHeight);
-      const scale = window.devicePixelRatio || 1;
-
-      // Set canvas dimensions
-      [displayCanvas, bufferCanvas].forEach(canvas => {
-        canvas.width = size * scale;
-        canvas.height = size * scale;
-        canvas.style.width = `${size}px`;
-        canvas.style.height = `${size}px`;
-      });
-
-      // Scale drawing context
-      const ctx = displayCanvas.getContext("2d");
-      if (ctx) {
-        ctx.scale(scale, scale);
+    const animate = (timestamp: number) => {
+      renderFrame();
+      animationFrameId.current = requestAnimationFrame(animate);
+    };
+    
+    animationFrameId.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
       }
     };
+  }, [renderFrame]);
 
     // Initial size update
     updateCanvasSize();
