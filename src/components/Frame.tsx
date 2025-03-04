@@ -25,6 +25,8 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 import GameCanvas from "~/components/GameCanvas";
+import { GameMenu } from "~/components/GameMenu";
+import ScoreDisplay from "~/components/ScoreDisplay";
 import { Toast } from "~/components/ui/toast";
 
 

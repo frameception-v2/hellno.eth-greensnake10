@@ -61,7 +61,7 @@ export default function TouchOverlay({ onSwipe, className }: TouchOverlayProps) 
       overlay?.removeEventListener("touchmove", handleTouchMove);
       overlay?.removeEventListener("touchend", handleTouchEnd);
     };
-  }, []);
+  }, [handleTouchEnd, handleTouchMove, handleTouchStart]);
 
   return (
     <div
