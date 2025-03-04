@@ -25,6 +25,8 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 import GameCanvas from "~/components/GameCanvas";
+import { Toast, ToastTitle } from "~/components/ui/toast";
+import { useToast } from "~/components/ui/use-toast";
 
 function GameContainer() {
   return (
@@ -46,6 +48,19 @@ export default function Frame() {
   const canvasRef = useRef<CanvasHandle>(null);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
+  const { toast } = useToast();
+  const [lastCollisionTime, setLastCollisionTime] = useState(0);
+
+  const showCollisionFeedback = useCallback(() => {
+    if (Date.now() - lastCollisionTime > 1000) { // Throttle to 1 second
+      toast({
+        title: "Collision!",
+        variant: "destructive",
+        duration: 500,
+      });
+      setLastCollisionTime(Date.now());
+    }
+  }, [toast, lastCollisionTime]);
 
   const [added, setAdded] = useState(false);
 
@@ -163,7 +178,7 @@ export default function Frame() {
             <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
               {PROJECT_TITLE}
             </h1>
-            <GameCanvas>
+            <GameCanvas onCollision={showCollisionFeedback}>
               <ScoreDisplay score={0} />
               <TouchOverlay 
                 onSwipe={(direction) => {

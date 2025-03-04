@@ -11,7 +11,7 @@ Here's the structured todo list following your requirements:
 - [x] Implement keyboard event handler for arrow keys (InputHandler.ts)
 - [x] Create TouchOverlay component with swipe detection (TouchOverlay.tsx)
 - [x] Build score display using shadcn Card component (ScoreDisplay.tsx)
-- [ ] Add visual feedback for collisions using shadcn Toast (GameManager.ts)
+- [x] Add visual feedback for collisions using shadcn Toast (GameManager.ts)
 - [ ] Create pause/restart menu with shadcn Dropdown (GameMenu.tsx)
 - [ ] Implement directional input validation middleware (InputValidator.ts)
 
