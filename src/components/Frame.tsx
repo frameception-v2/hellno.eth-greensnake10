@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useCallback, useState, useRef } from "react";
+import TouchOverlay from "~/components/TouchOverlay";
 import { InputHandler } from "~/lib/InputHandler";
 import sdk, {
   AddFrame,
@@ -165,6 +166,12 @@ export default function Frame() {
               <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
                 Double Buffered Canvas Ready
               </div>
+              <TouchOverlay 
+                onSwipe={(direction) => {
+                  inputHandlerRef.current?.currentDirection = direction;
+                }}
+                className="bg-transparent"
+              />
             </GameCanvas>
           </div>
         </div>
