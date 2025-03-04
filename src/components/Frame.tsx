@@ -25,8 +25,7 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 import GameCanvas from "~/components/GameCanvas";
-import { Toast, ToastTitle } from "~/components/ui/toast";
-import { useToast } from "~/components/ui/use-toast";
+import { Toast } from "~/components/ui/toast";
 
 function GameContainer() {
   return (
