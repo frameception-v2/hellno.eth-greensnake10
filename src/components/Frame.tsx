@@ -27,25 +27,11 @@ import { PROJECT_TITLE } from "~/lib/constants";
 import GameCanvas from "~/components/GameCanvas";
 import { Toast } from "~/components/ui/toast";
 
-function GameContainer() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
-        <CardDescription>
-          This is an example card that you can customize or remove
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Label>Place content in a Card here.</Label>
-      </CardContent>
-    </Card>
-  );
-}
 
 export default function Frame() {
   const canvasRef = useRef<CanvasHandle>(null);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
   const { toast } = useToast();
   const [lastCollisionTime, setLastCollisionTime] = useState(0);
@@ -72,6 +58,12 @@ export default function Frame() {
       inputHandlerRef.current?.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    if (inputHandlerRef.current) {
+      inputHandlerRef.current.isEnabled = !isPaused;
+    }
+  }, [isPaused]);
 
   const addFrame = useCallback(async () => {
     try {
@@ -174,10 +166,15 @@ export default function Frame() {
         >
           {/* Actual game content */}
           <div className="absolute inset-0 flex flex-col game-container">
-            <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
-              {PROJECT_TITLE}
-            </h1>
             <GameCanvas onCollision={showCollisionFeedback}>
+              <GameMenu 
+                isPaused={isPaused}
+                onPauseResume={() => setIsPaused(!isPaused)}
+                onRestart={() => {
+                  canvasRef.current?.resetGame();
+                  setIsPaused(false);
+                }}
+              />
               <ScoreDisplay score={0} />
               <TouchOverlay 
                 onSwipe={(direction) => {
