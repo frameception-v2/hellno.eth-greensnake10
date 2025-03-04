@@ -147,7 +147,7 @@ export default function Frame() {
           }}
         >
           {/* Actual game content */}
-          <div className="absolute inset-0 flex flex-col">
+          <div className="absolute inset-0 flex flex-col game-container">
             <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
               {PROJECT_TITLE}
             </h1>

@@ -25,6 +25,11 @@ body {
   display: none;
 }
 
+/* Prevent default touch behaviors on game container */
+.game-container {
+  touch-action: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
