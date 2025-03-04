@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
+import { InputHandler } from "~/lib/InputHandler";
 import sdk, {
   AddFrame,
   SignIn as SignInCore,
@@ -47,6 +48,14 @@ export default function Frame() {
   const [added, setAdded] = useState(false);
 
   const [addFrameResult, setAddFrameResult] = useState("");
+  const inputHandlerRef = useRef<InputHandler | null>(null);
+
+  useEffect(() => {
+    inputHandlerRef.current = new InputHandler();
+    return () => {
+      inputHandlerRef.current?.destroy();
+    };
+  }, []);
 
   const addFrame = useCallback(async () => {
     try {

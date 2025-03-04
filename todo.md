@@ -8,7 +8,7 @@ Here's the structured todo list following your requirements:
 - [x] Create double buffered canvas system with offscreen rendering (GameCanvas.tsx)
 
 ### UI Components & Interactions
-- [ ] Implement keyboard event handler for arrow keys (InputHandler.ts)
+- [x] Implement keyboard event handler for arrow keys (InputHandler.ts)
 - [ ] Create TouchOverlay component with swipe detection (TouchOverlay.tsx)
 - [ ] Build score display using shadcn Card component (ScoreDisplay.tsx)
 - [ ] Add visual feedback for collisions using shadcn Toast (GameManager.ts)
