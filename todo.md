@@ -1,7 +1,7 @@
 Here's the structured todo list following your requirements:
 
 ### Frame Structure
-- [ ] Create core GameCanvas component with dynamic ref-based canvas sizing (GameCanvas.tsx)
+- [x] Create core GameCanvas component with dynamic ref-based canvas sizing (GameCanvas.tsx)
 - [ ] Implement base Frame layout with responsive 1:1 aspect ratio container (layout.tsx)
 - [ ] Set up viewport meta configuration for mobile scaling (metadata.ts)
 - [ ] Configure CSS touch-action: none on game container (globals.css)

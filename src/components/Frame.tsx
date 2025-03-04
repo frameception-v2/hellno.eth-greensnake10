@@ -21,8 +21,9 @@ import { useSession } from "next-auth/react";
 import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
+import GameCanvas from "~/components/GameCanvas";
 
-function ExampleCard() {
+function GameContainer() {
   return (
     <Card>
       <CardHeader>
@@ -140,7 +141,11 @@ export default function Frame() {
         <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
           {PROJECT_TITLE}
         </h1>
-        <ExampleCard />
+        <GameCanvas>
+          <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
+            Game Canvas Initialized
+          </div>
+        </GameCanvas>
       </div>
     </div>
   );
