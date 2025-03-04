@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, createContext, useContext } from "react";
+import { useEffect, useRef, useState, createContext, useContext, useImperativeHandle, forwardRef } from "react";
 
 type CanvasContextType = {
   displayCanvas: HTMLCanvasElement | null;
@@ -16,7 +16,11 @@ export function useCanvasContext() {
   return useContext(CanvasContext);
 }
 
-export default function GameCanvas({ children }: { children?: React.ReactNode }) {
+export type CanvasHandle = {
+  render: (drawFrame: (ctx: CanvasRenderingContext2D) => void) => void;
+};
+
+export default forwardRef<CanvasHandle, { children?: React.ReactNode }>(function GameCanvas({ children }, ref) {
   const containerRef = useRef<HTMLDivElement>(null);
   const displayCanvasRef = useRef<HTMLCanvasElement>(null);
   const bufferCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,25 +28,27 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
   const animationFrameId = useRef<number>();
   const lastFrameTime = useRef(performance.now());
 
-  const renderFrame = useCallback(() => {
-    if (!displayCanvasRef.current || !bufferCanvasRef.current) return;
-    
-    const bufferCtx = bufferCanvasRef.current.getContext('2d');
-    const displayCtx = displayCanvasRef.current.getContext('2d');
-    
-    if (!bufferCtx || !displayCtx) return;
+  useImperativeHandle(ref, () => ({
+    render: (drawFrame: (ctx: CanvasRenderingContext2D) => void) => {
+      const bufferCanvas = bufferCanvasRef.current;
+      const displayCanvas = displayCanvasRef.current;
+      if (!bufferCanvas || !displayCanvas) return;
 
-    // Clear buffers
-    bufferCtx.clearRect(0, 0, bufferCanvasRef.current.width, bufferCanvasRef.current.height);
-    displayCtx.clearRect(0, 0, displayCanvasRef.current.width, displayCanvasRef.current.height);
+      // Render to buffer
+      const bufferCtx = bufferCanvas.getContext('2d');
+      if (!bufferCtx) return;
+      
+      bufferCtx.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height);
+      drawFrame(bufferCtx);
 
-    // Custom drawing operations would go here
-    bufferCtx.fillStyle = '#c026d3';
-    bufferCtx.fillRect(0, 0, bufferCanvasRef.current.width, bufferCanvasRef.current.height);
-
-    // Copy buffer to display
-    displayCtx.drawImage(bufferCanvasRef.current, 0, 0);
-  }, []);
+      // Copy to display
+      const displayCtx = displayCanvas.getContext('2d');
+      if (!displayCtx) return;
+      
+      displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height);
+      displayCtx.drawImage(bufferCanvas, 0, 0);
+    }
+  }));
 
   const updateCanvasSize = useCallback(() => {
     if (!containerRef.current || !displayCanvasRef.current || !bufferCanvasRef.current) return;

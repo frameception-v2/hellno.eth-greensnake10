@@ -40,6 +40,7 @@ function GameContainer() {
 }
 
 export default function Frame() {
+  const canvasRef = useRef<CanvasHandle>(null);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
 
