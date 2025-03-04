@@ -72,7 +72,7 @@ export default function GameCanvas({ children }: { children?: React.ReactNode })
     });
   }, []);
 
-  }, [renderFrame]);
+  }, [bufferCanvasRef, displayCanvasRef]);
 
   // Set up animation loop
   useEffect(() => {
