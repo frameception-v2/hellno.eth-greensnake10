@@ -28,6 +28,8 @@ body {
 /* Prevent default touch behaviors on game container */
 .game-container {
   touch-action: none;
+  -webkit-touch-callout: none; /* iOS Safari */
+  user-select: none; /* Standard syntax */
 }
 
 @layer base {
