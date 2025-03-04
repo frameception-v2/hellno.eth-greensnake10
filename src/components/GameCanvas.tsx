@@ -118,4 +118,3 @@ export default forwardRef<CanvasHandle, { children?: React.ReactNode }>(function
     </CanvasContext.Provider>
   );
 });
-});

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useCallback, useState, useRef } from "react";
+import type { CanvasHandle } from "~/components/GameCanvas";
 import TouchOverlay from "~/components/TouchOverlay";
 import { InputHandler } from "~/lib/InputHandler";
 import sdk, {
