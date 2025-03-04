@@ -163,9 +163,7 @@ export default function Frame() {
               {PROJECT_TITLE}
             </h1>
             <GameCanvas>
-              <div className="absolute top-4 left-4 text-sm text-neutral-600 dark:text-neutral-400">
-                Double Buffered Canvas Ready
-              </div>
+              <ScoreDisplay score={0} />
               <TouchOverlay 
                 onSwipe={(direction) => {
                   if (inputHandlerRef.current) {
