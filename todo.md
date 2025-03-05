@@ -13,7 +13,7 @@ Here's the structured todo list following your requirements:
 - [x] Build score display using shadcn Card component (ScoreDisplay.tsx)
 - [x] Add visual feedback for collisions using shadcn Toast (GameManager.ts)
 - [x] Create pause/restart menu with shadcn Dropdown (GameMenu.tsx)
-- [ ] Implement directional input validation middleware (InputValidator.ts)
+- [x] Implement directional input validation middleware (InputValidator.ts)
 
 ### API Integration
 - [ ] Integrate Frame SDK for share capabilities (page.tsx)

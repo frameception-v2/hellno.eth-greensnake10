@@ -4,6 +4,7 @@ import { useEffect, useCallback, useState, useRef } from "react";
 import type { CanvasHandle } from "~/components/GameCanvas";
 import TouchOverlay from "~/components/TouchOverlay";
 import { InputHandler } from "~/lib/InputHandler";
+import { InputValidator } from "~/lib/InputValidator";
 import sdk, {
   AddFrame,
   SignIn as SignInCore,
@@ -55,7 +56,7 @@ export default function Frame() {
   const inputHandlerRef = useRef<InputHandler | null>(null);
 
   useEffect(() => {
-    inputHandlerRef.current = new InputHandler();
+    inputHandlerRef.current = new InputValidator(new InputHandler());
     return () => {
       inputHandlerRef.current?.destroy();
     };
