@@ -16,7 +16,7 @@ Here's the structured todo list following your requirements:
 - [x] Implement directional input validation middleware (InputValidator.ts)
 
 ### API Integration
-- [ ] Integrate Frame SDK for share capabilities (page.tsx)
+- [x] Integrate Frame SDK for share capabilities (page.tsx)
 - [ ] Set up Wagmi wallet context provider (providers.tsx)
 - [ ] Create share image generator using Canvas API (ShareGenerator.ts)
 - [ ] Implement Frame meta tags for OG image sharing (page.tsx)

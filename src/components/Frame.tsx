@@ -70,7 +70,19 @@ export default function Frame() {
 
   const addFrame = useCallback(async () => {
     try {
-      await sdk.actions.addFrame();
+      await sdk.actions.addFrame({
+        frameMetadata: {
+          buttons: [
+            {
+              label: "Share",
+              action: "post",
+              primary: true
+            }
+          ],
+          title: PROJECT_TITLE,
+          description: PROJECT_DESCRIPTION,
+        }
+      });
     } catch (error) {
       if (error instanceof AddFrame.RejectedByUser) {
         setAddFrameResult(`Not added: ${error.message}`);
@@ -120,7 +132,16 @@ export default function Frame() {
       });
 
       sdk.on("primaryButtonClicked", () => {
-        console.log("primaryButtonClicked");
+        const shareUrl = `${window.location.origin}?score=${0}`;
+        window.open(
+          `https://warpcast.com/~/compose?text=${encodeURIComponent(PROJECT_TITLE)}&embeds[]=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+        toast({
+          title: "Shared!",
+          description: "Game link shared to Farcaster",
+          duration: 2000,
+        });
       });
 
       console.log("Calling ready");
