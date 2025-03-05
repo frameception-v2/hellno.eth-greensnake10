@@ -13,18 +13,18 @@ export default function TouchOverlay({ onSwipe, className }: TouchOverlayProps) 
   const touchStartPos = useRef<{ x: number; y: number } | null>(null);
   const minSwipeDistance = 30; // Minimum distance in pixels to consider a swipe
 
-  const handleTouchStart = (e: TouchEvent) => {
+  const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartPos.current = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY
     };
-  };
+  }, []);
 
-  const handleTouchMove = (e: TouchEvent) => {
+  const handleTouchMove = useCallback((e: TouchEvent) => {
     e.preventDefault(); // Prevent scrolling
-  };
+  }, []);
 
-  const handleTouchEnd = (e: TouchEvent) => {
+  const handleTouchEnd = useCallback((e: TouchEvent) => {
     if (!touchStartPos.current) return;
 
     const touchEndPos = {
