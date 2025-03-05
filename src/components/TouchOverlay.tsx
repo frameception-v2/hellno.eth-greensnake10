@@ -47,7 +47,7 @@ export default function TouchOverlay({ onSwipe, className }: TouchOverlayProps) 
 
     onSwipe(direction);
     touchStartPos.current = null;
-  };
+  }, [onSwipe]); // Added closing parenthesis and dependency array
 
   useEffect(() => {
     const overlay = document.getElementById("touch-overlay");
